@@ -53,8 +53,14 @@ public class FakeStoreProductService implements ProductService {
 	}
 
 	@Override
-	public GenericProductDto getProductById(String id) {
-		return convertFakeStoreProductIntoGenericProduct(fakeStoreProductServiceClient.getProductById(id));
+	public GenericProductDto getProductById(String id) throws NoDataFoundException {
+		FakeStoreProductDto product = fakeStoreProductServiceClient.getProductById(id);
+	
+		if (product == null) {
+			throw new NoDataFoundException("Product Id: " + id + " doesn't exist.");
+		}
+
+		return convertFakeStoreProductIntoGenericProduct(product);
 	}
 
 	public GenericProductDto createProduct(GenericProductDto product) {

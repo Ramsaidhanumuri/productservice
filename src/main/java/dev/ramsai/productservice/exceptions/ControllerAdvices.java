@@ -23,7 +23,8 @@ public class ControllerAdvices {
 		return new ResponseEntity<ExceptionDto>(response, HttpStatus.NOT_FOUND);
 	}
 	
-	private ResponseEntity<ExceptionDto> handleEmpptyInputException(EmptyInputException emptyInputException){
+	@ExceptionHandler(EmptyInputException.class)
+	private ResponseEntity<ExceptionDto> handleEmptyInputException(EmptyInputException emptyInputException){
 		ExceptionDto responce = new ExceptionDto(
 				OffsetDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
