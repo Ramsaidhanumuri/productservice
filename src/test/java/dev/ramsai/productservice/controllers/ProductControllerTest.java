@@ -30,8 +30,6 @@ class ProductControllerTest {
 	@Test
 	void testGetAllProductsReturnEmptyList() throws Exception {
 
-		Mockito.when(productService.getAllProducts()).thenReturn(Collections.emptyList());
-
 		MvcResult result = mockMvc
 				.perform(MockMvcRequestBuilders.get("/api/v1/products").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isNotFound()).andReturn();
@@ -57,8 +55,6 @@ class ProductControllerTest {
 	@Test
 	void testGetProductByIdNotExits() throws Exception {
 
-		when(productService.getProductById("0")).thenReturn(null);
-
 		MvcResult result = mockMvc
 				.perform(MockMvcRequestBuilders.get("/api/v1/products/0").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isNotFound()).andReturn();
@@ -83,5 +79,18 @@ class ProductControllerTest {
 		mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/products/1").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isOk());
 
+	}
+
+	@Test
+	void testCreateProductWithEmptyFields() throws Exception {
+		
+		MvcResult result = mockMvc
+				.perform(MockMvcRequestBuilders.post("/api/v1/products")
+						.contentType(MediaType.APPLICATION_JSON).content("{}"))
+				.andExpect(MockMvcResultMatchers.status().isBadRequest()).andReturn();
+
+		Exception resolvedException = result.getResolvedException();
+		assertEquals("Product details cannot be empty.", resolvedException.getMessage());
+		
 	}
 }
