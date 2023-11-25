@@ -70,8 +70,7 @@ public class FakeStoreProductService implements ProductService {
 	
 	@Override
 	public GenericProductDto updateProductById(String id, GenericProductDto product) {
-		// TODO Auto-generated method stub
-		return null;
+		return convertFakeStoreProductIntoGenericProduct(fakeStoreProductServiceClient.updateProductById(id, product));
 	}
 
 	@Override

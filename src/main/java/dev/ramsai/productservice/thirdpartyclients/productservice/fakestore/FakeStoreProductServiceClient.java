@@ -64,6 +64,10 @@ public class FakeStoreProductServiceClient {
 
 		return response.getBody();
 	}
+	
+	public FakeStoreProductDto updateProductById(String id, GenericProductDto product) {
+		return null;
+	}
 
 	public FakeStoreProductDto deleteProductById(Long id) {
 
