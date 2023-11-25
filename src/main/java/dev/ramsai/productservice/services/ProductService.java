@@ -12,6 +12,8 @@ public interface ProductService {
 	GenericProductDto getProductById(String id) throws NoDataFoundException;
 
 	GenericProductDto createProduct(GenericProductDto product);
+	
+	GenericProductDto updateProductById(String id, GenericProductDto product);
 
 	GenericProductDto deleteProductById(Long id);
 }

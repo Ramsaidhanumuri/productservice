@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -61,6 +63,19 @@ public class FakeStoreProductServiceClient {
 		RestTemplate restTemplate = restTemplateBuilder.build();
 		ResponseEntity<FakeStoreProductDto> response = restTemplate.postForEntity(productRequestsBaseUrl, product,
 				FakeStoreProductDto.class);
+
+		return response.getBody();
+	}
+
+	public FakeStoreProductDto updateProductById(String id, GenericProductDto product) {
+
+		RestTemplate restTemplate = restTemplateBuilder.build();
+		HttpHeaders headers = new HttpHeaders();
+
+		HttpEntity<GenericProductDto> requestEntity = new HttpEntity<>(product, headers);
+
+		ResponseEntity<FakeStoreProductDto> response = restTemplate.exchange(specificProductRequestUrl, HttpMethod.PUT,
+				requestEntity, FakeStoreProductDto.class, id);
 
 		return response.getBody();
 	}
