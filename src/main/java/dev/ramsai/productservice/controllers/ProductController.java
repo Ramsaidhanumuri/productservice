@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import dev.ramsai.productservice.dtos.GenericProductDto;
+import dev.ramsai.productservice.exceptions.EmptyInputException;
 import dev.ramsai.productservice.exceptions.NoDataFoundException;
 import dev.ramsai.productservice.services.ProductService;
 
@@ -40,7 +41,7 @@ public class ProductController {
 
 		GenericProductDto product = productService.getProductById(id);
 
-		if (product == null) {
+		if (product==null) {
 			throw new NoDataFoundException("Product Id: " + id + " doesn't exist.");
 		}
 
@@ -48,7 +49,11 @@ public class ProductController {
 	}
 
 	@PostMapping()
-	public GenericProductDto createProduct(@RequestBody GenericProductDto product) {
+	public GenericProductDto createProduct(@RequestBody GenericProductDto product) throws EmptyInputException {
+		if(product.getTitle()==null || product.getPrice()==0 || product.getCategory()==null ||
+				product.getImage()==null || product.getDescription()==null) {
+			throw new EmptyInputException("Product details cannot be empty.");
+		}
 		return productService.createProduct(product);
 	}
 

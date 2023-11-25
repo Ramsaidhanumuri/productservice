@@ -9,7 +9,7 @@ public interface ProductService {
 
 	List<GenericProductDto> getAllProducts();
 
-	GenericProductDto getProductById(String id);
+	GenericProductDto getProductById(String id) throws NoDataFoundException;
 
 	GenericProductDto createProduct(GenericProductDto product);
 
