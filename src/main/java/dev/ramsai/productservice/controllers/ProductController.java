@@ -41,7 +41,7 @@ public class ProductController {
 
 		GenericProductDto product = productService.getProductById(id);
 
-		if (product==null) {
+		if (product == null) {
 			throw new NoDataFoundException("Product Id: " + id + " doesn't exist.");
 		}
 
@@ -50,28 +50,29 @@ public class ProductController {
 
 	@PostMapping()
 	public GenericProductDto createProduct(@RequestBody GenericProductDto product) throws EmptyInputException {
-		if(product.getTitle()==null || product.getPrice()==0 || product.getCategory()==null ||
-				product.getImage()==null || product.getDescription()==null) {
+		if (product.getTitle() == null || product.getPrice() == 0 || product.getCategory() == null
+				|| product.getImage() == null || product.getDescription() == null) {
 			throw new EmptyInputException("Product details cannot be empty.");
 		}
 		return productService.createProduct(product);
 	}
 
 	@PutMapping("/{id}")
-	public void updateProductById(@PathVariable("id") String id, @RequestBody GenericProductDto product) throws EmptyInputException {
-		if(product.getTitle()==null || product.getPrice()==0 || product.getCategory()==null ||
-				product.getImage()==null || product.getDescription()==null) {
+	public GenericProductDto updateProductById(@PathVariable("id") String id, @RequestBody GenericProductDto product)
+			throws EmptyInputException, NoDataFoundException {
+		if (product.getTitle() == null || product.getPrice() == 0 || product.getCategory() == null
+				|| product.getImage() == null || product.getDescription() == null) {
 			throw new EmptyInputException("Product details cannot be empty.");
 		}
-		
-		GenericProductDto product = productService.updateProductById(id, product);
 
-		if (product==null) {
+		GenericProductDto productDto = productService.updateProductById(id, product);
+
+		if (productDto == null) {
 			throw new NoDataFoundException("Product Id: " + id + " doesn't exist.");
 		}
 
-		return product;
-		
+		return productDto;
+
 	}
 
 	@DeleteMapping("/{id}")

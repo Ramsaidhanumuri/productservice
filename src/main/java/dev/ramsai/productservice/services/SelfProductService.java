@@ -94,4 +94,10 @@ public class SelfProductService implements ProductService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public GenericProductDto updateProductById(String id, GenericProductDto product) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
