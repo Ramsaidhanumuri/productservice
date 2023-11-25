@@ -66,15 +66,4 @@ public class ProductController {
 	public GenericProductDto deleteProductById(@PathVariable("id") Long id) {
 		return productService.deleteProductById(id);
 	}
-
-	@GetMapping("/get")
-	public List<GenericProductDto> getData() throws NoDataFoundException {
-		List<GenericProductDto> emptyList = Collections.emptyList();
-
-		if (emptyList.isEmpty()) {
-			throw new NoDataFoundException("Hi");
-		}
-
-		return emptyList;
-	}
 }
