@@ -59,11 +59,7 @@ public class ProductController {
 
 	@PutMapping("/{id}")
 	public GenericProductDto updateProductById(@PathVariable("id") String id, @RequestBody GenericProductDto product)
-			throws EmptyInputException, NoDataFoundException {
-//		if (product.getTitle() == null || product.getPrice() == 0 || product.getCategory() == null
-//				|| product.getImage() == null || product.getDescription() == null) {
-//			throw new EmptyInputException("Product details cannot be empty.");
-//		}
+			throws NoDataFoundException {
 
 		GenericProductDto productDto = productService.updateProductById(id, product);
 
