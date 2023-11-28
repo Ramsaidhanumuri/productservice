@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import dev.ramsai.productservice.dtos.GenericProductDto;
+import dev.ramsai.productservice.exceptions.BadGatewayException;
 import dev.ramsai.productservice.exceptions.NoDataFoundException;
 
 @Service
@@ -37,11 +38,16 @@ public class FakeStoreProductServiceClient {
 		this.specificProductRequestUrl = fakeStoreApiUrl + fakeStoreProductsApiPath + "/{id}";
 	}
 
-	public List<FakeStoreProductDto> getAllProducts() {
+	public List<FakeStoreProductDto> getAllProducts() throws BadGatewayException {
 
 		RestTemplate restTemplate = restTemplateBuilder.build();
-		ResponseEntity<FakeStoreProductDto[]> response = restTemplate.getForEntity(productRequestsBaseUrl,
-				FakeStoreProductDto[].class);
+		ResponseEntity<FakeStoreProductDto[]> response;
+		try {
+			response = restTemplate.getForEntity(productRequestsBaseUrl,
+					FakeStoreProductDto[].class);
+		} catch (Exception e) {
+			throw new BadGatewayException("Fake store is curently unavailable");
+		}
 
 		List<FakeStoreProductDto> fakeStoreProductDtos = Arrays.stream(response.getBody()).toList();
 

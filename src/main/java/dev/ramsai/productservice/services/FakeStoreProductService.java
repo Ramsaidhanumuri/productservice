@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import dev.ramsai.productservice.dtos.GenericProductDto;
+import dev.ramsai.productservice.exceptions.BadGatewayException;
 import dev.ramsai.productservice.exceptions.NoDataFoundException;
 import dev.ramsai.productservice.thirdpartyclients.productservice.fakestore.FakeStoreProductDto;
 import dev.ramsai.productservice.thirdpartyclients.productservice.fakestore.FakeStoreProductServiceClient;
@@ -41,7 +42,7 @@ public class FakeStoreProductService implements ProductService {
 	}
 
 	@Override
-	public List<GenericProductDto> getAllProducts() {
+	public List<GenericProductDto> getAllProducts() throws BadGatewayException {
 
 		List<GenericProductDto> genericProductDtos = new ArrayList<>();
 
