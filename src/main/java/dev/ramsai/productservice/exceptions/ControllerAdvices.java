@@ -33,4 +33,15 @@ public class ControllerAdvices {
 				);
 		return new ResponseEntity<ExceptionDto>(responce, HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(BadGatewayException.class)
+	private ResponseEntity<ExceptionDto> handleBadGatewayException(BadGatewayException badGatewayException){
+		ExceptionDto responce = new ExceptionDto(
+				OffsetDateTime.now(),
+                HttpStatus.BAD_GATEWAY.value(),
+                HttpStatus.BAD_GATEWAY.getReasonPhrase(),
+                badGatewayException.getMessage()
+				);
+		return new ResponseEntity<ExceptionDto>(responce, HttpStatus.BAD_REQUEST);
+	}
 }
